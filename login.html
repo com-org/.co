@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WNO - Login</title>
+    <style>
+        /* Base Reset & Background */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(180deg, whitesmoke 0%, black 100%);
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+
+        /* Notification Container */
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90vw;
+            max-width: 400px;
+            pointer-events: none;
+        }
+
+        .notification {
+            background: white;
+            color: black;
+            padding: 15px 20px;
+            border-radius: 15px;
+            border: 2px solid black;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: slideDown 0.5s ease forwards;
+            pointer-events: auto;
+            transition: 0.5s;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .error-title { font-weight: bold; color: #d32f2f; display: block; margin-bottom: 4px; text-transform: uppercase; }
+        .success-title { font-weight: bold; color: #2e7d32; display: block; margin-bottom: 4px; text-transform: uppercase; }
+
+        /* Navigation */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background-color: black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            border: 2px solid white;
+            z-index: 100;
+        }
+
+        /* Login Box */
+        .login-box {
+            width: 90vw;
+            max-width: 380px;
+            background: whitesmoke;
+            border: 2px solid black;
+            border-radius: 30px;
+            padding: 30px;
+            text-align: center;
+            box-sizing: border-box;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            border-radius: 15px; 
+            border: 1px solid black;
+            margin-bottom: 10px;
+            background: white;
+        }
+
+        h2 { margin-bottom: 20px; color: #000; font-weight: 900; letter-spacing: 1px; }
+
+        input {
+            width: 100%;
+            padding: 14px 20px;
+            margin: 5px 0;
+            border: 2px solid black;
+            border-radius: 50px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 50px;
+            margin-top: 10px;
+            border: 2px solid black;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #003366;
+            background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+    .milo {
+           width: 100%;
+            height: 60px;
+            margin-top: 15px;
+            border: 2px solid black;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #003366;
+            background: inherit;
+            cursor: pointer;
+            transition: 0.2s;  
+        display:flex;
+        align-items:center;
+        
+  
+    }
+    .milon { 
+        height:50px;
+        width:50px;
+        border-radius:50%;
+        border:2px solid black;
+        margin-left:3px
+    }
+
+        .login-btn:disabled { opacity: 0.6; }
+
+        .footer-links { margin-top: 20px; font-size: 13px; }
+        .footer-links a { color: #007BFF; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="notification-container"></div>
+
+    <a href="index.html" class="back-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+            <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+        </svg>
+    </a>
+
+    <div class="login-box">
+        <img src="logo.png" class="logo-img" onerror="this.src='https://via.placeholder.com/100x60?text=WNO'">
+        <h2>LOGIN</h2>
+
+        <form id="loginForm">
+            <input id="email" type="email" placeholder="Email Address" required>
+            <input id="password" type="password" placeholder="Password" required>
+            <button type="submit" class="login-btn" id="loginBtn">LOG IN</button>
+        </form>
+        <div class="milo" id="milo">
+            <img src="milo.png" class="milon">
+            <p style="margin-left:30px;">Continue with Milo</p>
+        </div>
+            
+    </div>
+
+    <script>
+        function showNotification(title, message, type) {
+            const container = document.getElementById('notification-container');
+            const note = document.createElement('div');
+            note.className = 'notification';
+            const titleClass = type === 'success' ? 'success-title' : 'error-title';
+            
+            note.innerHTML = `<span class="${titleClass}">${title}</span><span>${message}</span>`;
+            container.appendChild(note);
+
+            setTimeout(() => {
+                note.style.opacity = '0';
+                note.style.transform = 'translateY(-20px)';
+                setTimeout(() => note.remove(), 500);
+            }, 5000);
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('email').value.trim();
+            const passwordInput = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
+
+            btn.innerText = "VERIFYING...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('users.json');
+                
+                if (!response.ok) { throw new Error("JSON_MISSING"); }
+
+                const users = await response.json();
+                const user = users.find(u => u.email === emailInput);
+
+                if (!user) {
+                    showNotification("Account Not Found", "Dear user, we are sorry to inform you that the account credentials you entered are either invalid or are not registered. Please check for typos and try again.", "error");
+                } 
+                else if (user.password !== passwordInput) {
+                    showNotification("Invalid Password", "The password provided does not match our records. Please verify your credentials.", "error");
+                } 
+                else {
+                    /**
+                     * HANDSHAKE INITIALIZATION:
+                     * We store the user object in localStorage to persist the session.
+                     * This allows dashboard.html to identify the user and load their specific files.
+                     */
+                    localStorage.setItem('session_user', JSON.stringify({
+                        name: user.name,
+                        email: user.email,
+                        dataPath: user.data_path || "default/path/"
+                    }));
+
+                    showNotification("Access Granted", `Welcome back, ${user.name}! Accessing your dashboard...`, "success");
+                    
+                    // Redirecting to dashboard.html as requested
+                    setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
+                }
+
+            } catch (error) {
+                if (error.message === "JSON_MISSING") {
+                    showNotification("System Error", "We are experiencing difficulties accessing the user database. Please ensure 'users.json' exists in the root folder.", "error");
+                } else {
+                    showNotification("SERVER UNDER MAINTENANCE", "Server is currently experiencing some technical difficulties, please check back later.", "error");
+                }
+            } finally {
+                btn.innerText = "LOG IN";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

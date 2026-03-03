@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WNO - AI SUPPORT</title>
+    <style>
+        /* Base Reset */
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100vh;
+            background: linear-gradient(180deg, whitesmoke 0%, black 100%);
+            font-family: Arial, sans-serif; overflow: hidden;
+        }
+
+        body { display: flex; flex-direction: column; align-items: center; background-color: black; }
+
+        /* Menu Section */
+        .menu {
+            align-items: center; display: flex; width: 95vw; height: 50px;
+            border: 2px solid black; border-radius: 120px; margin-top: 20px;
+            background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
+            flex-shrink: 0; z-index: 10;
+        }
+
+        .logo { height: 40px; margin-left: 5px; border-radius: 22px; border: 1px solid white; }
+        .head { font-size: 14px; margin-left: 10px; color: black; font-weight: bold; }
+
+        /* Navigation */
+        .button-space {
+            background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
+            margin-top: 15px; display: flex; width: 95vw; height: 40px;
+            border-radius: 120px; justify-content: center; align-items: center;
+            border: 2px solid black; flex-shrink: 0;
+        }
+
+        .button {
+            height: 25px; width: 21vw; margin: 1vw; border-radius: 120px;
+            background-color: black; color: white; border: 1px solid white; font-size: 10px;
+        }
+
+        /* Chat Container */
+        .container { 
+            width: 95vw; margin-top: 20px; border: 2px solid black;
+            background-color: whitesmoke; border-radius: 30px;
+            display: flex; flex-direction: column; height: calc(100vh - 190px);
+            overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .ai-status {
+            background: linear-gradient(180deg, #fff 0%, #87CEFA 100%);
+            color: #003366; font-weight: bold; font-size: 11px;
+            padding: 8px 20px; border-bottom: 2px solid black;
+        }
+
+        #chat-space {
+            flex: 1; padding: 15px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 12px; background: #ebebeb;
+        }
+
+        .message {
+            max-width: 85%; padding: 12px 15px; border-radius: 20px;
+            font-size: 14px; line-height: 1.4; border: 1.5px solid black;
+        }
+
+        .ai-msg { align-self: flex-start; background: white; border-bottom-left-radius: 2px; }
+        .user-msg { align-self: flex-end; background: #87CEFA; border-bottom-right-radius: 2px; }
+
+        /* Input Area */
+        .chat-input-area {
+            padding: 12px; background: whitesmoke; border-top: 2px solid black;
+            display: flex; gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1; height: 45px; border-radius: 50px; border: 2px solid black;
+            padding: 0 20px; outline: none; font-size: 15px;
+        }
+
+        .send-btn {
+            width: 80px; border-radius: 50px; border: 2px solid black;
+            background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
+            font-weight: bold; color: #003366; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu">
+        <img src="logo.png" class="logo">
+        <h1 class="head">WORLD NEWS OFFICIALS</h1>
+    </div>
+
+    <div class="button-space">
+        <a href="index.html"><button class="button">Home</button></a>
+        <a href="about.html"><button class="button">About</button></a>
+        <a href="policy.html"><button class="button">Policy</button></a>
+        <a href="contact us.html"><button class="button">Contact Us</button></a> 
+    </div>
+
+    <div class="container">
+        <div class="ai-status">● WNO AI ASDISTANT</div>
+        <div id="chat-space">
+            <div class="message ai-msg">Systems ready. How can I assist you today?</div>
+        </div>
+        <form class="chat-input-area" id="chat-form">
+            <input type="text" id="user-input" class="chat-input" placeholder="Type here..." required autocomplete="off">
+            <button type="submit" class="send-btn" id="submit-btn">SEND</button>
+        </form>
+    </div>
+
+    <script>
+        const chatSpace = document.getElementById('chat-space');
+        const userInput = document.getElementById('user-input');
+        const submitBtn = document.getElementById('submit-btn');
+
+        const API_KEY = "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";
+        const API_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
+
+        function appendMessage(text, type) {
+            const div = document.createElement('div');
+            div.className = `message ${type}-msg`;
+            div.innerText = text;
+            chatSpace.appendChild(div);
+            chatSpace.scrollTop = chatSpace.scrollHeight;
+            return div;
+        }
+
+        document.getElementById('chat-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            userInput.value = '';
+            submitBtn.disabled = true;
+            
+            const aiMsgDiv = appendMessage("Syncing context...", 'ai');
+            let fullResponse = "";
+
+            try {
+                // 1. Fetch company details from external TXT file
+                let companyContext = "";
+                try {
+                    const res = await fetch('company.txt');
+                    if(res.ok) companyContext = await res.text();
+                } catch(e) { console.log("TXT file not found or inaccessible."); }
+
+                // 2. Prepare the AI request with the TXT data
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: "nvidia/llama3-chatqa-1.5-8b",
+                        messages: [
+                            {role: "system", content: "You are the official AI assistant for the company described here: " + companyContext},
+                            {role: "user", content: text}
+                        ],
+                        temperature: 0.2,
+                        stream: true 
+                    })
+                });
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                aiMsgDiv.innerText = ""; // Clear "Syncing" text
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+                            try {
+                                const json = JSON.parse(line.substring(6));
+                                const content = json.choices[0].delta.content;
+                                if (content) {
+                                    fullResponse += content;
+                                    aiMsgDiv.innerText = fullResponse;
+                                    chatSpace.scrollTop = chatSpace.scrollHeight;
+                                }
+                            } catch (e) {}
+                        }
+                    }
+                }
+            } catch (error) {
+                aiMsgDiv.innerText = "Error: Connection timed out.";
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

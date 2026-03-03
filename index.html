@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WORLD NEWS OFFICIALS</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        html {
+            background: linear-gradient(180deg, whitesmoke 0%, black 100%);
+        }
+
+        body {
+            background: inherit;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: black;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .menu {
+            align-items: center;
+            display: flex;
+            width: 95vw;
+            height: 50px;
+            border: 2px solid black;
+            padding: 0;
+            border-radius: 120px;
+            margin-top: 20px;
+            background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
+            flex-shrink: 0;
+        }
+
+        .logo {
+            height: 40px;
+            margin-left: 5px;
+            border-radius: 120px;
+            border: 1px solid white;
+        }
+
+        .head {
+            margin-left: 10px;
+            font-size: 14px;
+            color: black;
+        }
+
+        .button-space {
+            background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
+            padding: 0;
+            margin-top: 15px;
+            display: flex;
+            width: 95vw;
+            height: 45px;
+            border-radius: 120px;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid black;
+            flex-shrink: 0;
+        }
+
+        .button {
+            height: 30px;
+            width: 21vw;
+            margin: 1vw;
+            border-radius: 120px;
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .partner {
+            margin-top: 20px;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .img {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+            border-radius: 50%;
+            object-fit: cover;
+            background: white;
+        }
+
+        .rolling-wrapper {
+            margin-top: 20px;
+            height: 160px;
+            width: 100vw;
+            display: flex;
+            align-items: center; 
+            overflow: hidden; 
+            flex-shrink: 0;
+        }
+
+        .rolling-track {
+            display: flex;
+            animation: scrollRightToLeft 40s linear infinite;
+        }
+
+        .rolling-track img {
+            width: 200px;
+            height: 140px;
+            border: 1px solid black;
+            border-radius: 15px;
+            margin: 0 10px; 
+            object-fit: cover;
+        }
+
+        @keyframes scrollRightToLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-220px * 20)); }
+        }
+
+        /* Fixed Link Container for Mobile */
+        .link { 
+            width: 95vw;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .enter {
+            height: 40px;
+            width: 130px;
+            border-radius: 120px;
+            border: 2px solid white;
+            font-size: 12px;
+            font-weight: bold;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+        }
+
+        .login, .licence {
+            height: 35px;
+            width: 80px;
+            border-radius: 120px;
+            font-size: 12px;
+            font-weight: bold;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .login { border: 2px solid red; color: red; }
+        .licence { border: 2px solid orange; color: orange; }
+
+        .visible-div {
+            margin-top: 20px;
+            height: 30vh;
+            width: 95vw;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #87CEFA;
+            border-radius: 15px;
+            box-sizing: border-box;
+        }
+
+        /* FAQ Styling */
+        details {
+            background: #fff;
+            border: 1px solid #87CEFA;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            color: black;
+        }
+
+        .answer {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #444;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+        }
+
+        .media { 
+            width: 100vw;
+            height: 60px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .plat {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 3vw;  
+            cursor: pointer;
+        }
+
+        .footer { 
+            width: 100vw;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+  <div class="menu">
+    <img src="logo.png" class="logo">
+    <h1 class="head">WORLD NEWS OFFICIALS</h1>
+  </div>
+
+  <div class="button-space">
+    <a href="index.html"><button class="button">Home</button></a>
+    <a href="about.html"><button class="button">About</button></a>
+    <a href="policy.html"><button class="button">Policy</button></a>
+    <a href="contact us.html"><button class="button">Contact Us</button></a> 
+  </div>
+
+  <div class="partner">
+    <img class="img" src="bbc.png">
+    <img class="img" src="skynews.png">
+    <img class="img" src="algezera.png">
+    <img class="img" src="Cnn.png">
+    <img class="img" src="google news.png">
+    <img class="img" src="skysports.png">
+  </div>
+
+  <div class="rolling-wrapper">
+    <div class="rolling-track">
+        <img src="img1.png"> <img src="img2.png"> <img src="img3.png"> <img src="img4.png">
+        <img src="img5.png"> <img src="img6.png"> <img src="img7.png"> <img src="img8.png">
+        <img src="img9.png"> <img src="img10.png"> <img src="img11.png"> <img src="img12.png">
+        <img src="img13.png"> <img src="img14.png"> <img src="img15.png"> <img src="img16.png">
+        <img src="img17.png"> <img src="img18.png"> <img src="img19.png"> <img src="img20.png">
+        <img src="img1.png"> <img src="img2.png"> <img src="img3.png"> <img src="img4.png">
+        <img src="img5.png"> <img src="img6.png"> <img src="img7.png"> <img src="img8.png">
+        <img src="img9.png"> <img src="img10.png"> <img src="img11.png"> <img src="img12.png">
+        <img src="img13.png"> <img src="img14.png"> <img src="img15.png"> <img src="img16.png">
+        <img src="img17.png"> <img src="img18.png"> <img src="img19.png"> <img src="img20.png">
+    </div>
+  </div>
+
+  <div class="link">
+    <a href="login.html"><button class="login">Login</button></a>
+    <a href="feed.html"><button class="enter">Enter Live Feed</button></a>
+    <a href="licence.html"><button class="licence">LICENCE</button></a>
+  </div>
+
+  <div class="visible-div">
+    <div class="faq-container">
+      <details>
+        <summary>How do I access the live news feed?</summary>
+        <div class="answer">
+          You can access the live feed by clicking the blue "Enter Live Feed" button located just above this section.
+        </div>
+      </details>
+      <details>
+        <summary>Is World News Officials a free service?</summary>
+        <div class="answer">
+          Yes, our primary news coverage and partner feeds are free to access for all users globally.
+        </div>
+      </details>
+      <details>
+        <summary>How often is the news updated?</summary>
+        <div class="answer">
+          Our rolling track and live feed are updated every minute to ensure you have the most current information.
+        </div>
+      </details>
+      <details>
+        <summary>Who are your official news partners?</summary>
+        <div class="answer">
+          We collaborate with major networks including BBC, Sky News, Al Jazeera, CNN, and Google News.
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="media">
+    <img src="instagram.png" class="plat">
+    <img src="youtube.png" class="plat">
+    <img src="xep.png" class="plat">
+    <img src="tiktok.png" class="plat">
+  </div>
+
+  <div class="footer">
+    <p>Property of Milocore | All rights reserved 2026</p>
+  </div>
+
+</body>
+</html>

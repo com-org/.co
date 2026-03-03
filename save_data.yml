@@ -1,0 +1,31 @@
+name: Save User Concern
+on:
+  repository_dispatch:
+    types: [save_concern]
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run Save Script
+        env:
+          USER_NAME: ${{ github.event.client_payload.name }}
+          USER_EMAIL: ${{ github.event.client_payload.email }}
+          USER_MESSAGE: ${{ github.event.client_payload.message }}
+          DATE: ${{ github.event.repository.updated_at }}
+        run: python save_message.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Milocore-Bot"
+          git config --global user.email "milocore08@gmail.com"
+          git add userconcerns.json
+          git commit -m "New concern from ${{ github.event.client_payload.name }}"
+          git push

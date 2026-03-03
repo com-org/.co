@@ -1,0 +1,25 @@
+
+
+[
+  {
+    "id": 1,
+    "name": "Milon",
+    "email": "milon@example.com",
+    "password": "password123",
+    "data_path": "/root/users/milon_files/private/"
+  },
+  {
+    "id": 2,
+    "name": "Admin",
+    "email": "admin@wno.com",
+    "password": "admin_secure_99",
+    "data_path": "/root/system/admin_panel/logs/"
+  },
+  {
+    "id": 3,
+    "name": "Guest User",
+    "email": "guest@demo.com",
+    "password": "guestpassword",
+    "data_path": "/root/public/shared_data/"
+  }
+]
