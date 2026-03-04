@@ -1,85 +1,70 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WNO - AI SUPPORT</title>
     <style>
-        /* Base Reset & Flex Layout */
+        /* Base Reset */
         html, body {
-            margin: 0; padding: 0; 
-            width: 100%; height: 100%; 
+            margin: 0; padding: 0; width: 100%; 
+            min-height: 100vh;
             background: linear-gradient(180deg, whitesmoke 0%, black 100%);
             font-family: Arial, sans-serif; 
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            overflow-y: auto; 
+            display: flex; flex-direction: column; align-items: center;
         }
 
         /* Menu Section */
         .menu {
-            display: flex; align-items: center; 
-            width: 95vw; height: 50px;
-            border: 2px solid black; border-radius: 120px; 
-            margin: 20px auto 0 auto;
+            align-items: center; display: flex; width: 350px; height: 50px;
+            border: 2px solid black; border-radius: 120px; margin-top: 25px;
             background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
             flex-shrink: 0; z-index: 10;
         }
 
-        .logo { height: 40px; margin-left: 5px; border-radius: 22px; border: 1px solid white; }
-        .head { font-size: 14px; margin-left: 10px; color: black; font-weight: bold; }
+        .logo { height: 35px; margin-left: 10px; border-radius: 20px; border: 1px solid white; }
+        .head { font-size: 13px; margin-left: 10px; color: black; font-weight: bold; }
 
         /* Navigation */
         .button-space {
             background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
-            margin-top: 15px; display: flex; width: 95vw; height: 40px;
+            margin-top: 15px; display: flex; width: 350px; height: 45px;
             border-radius: 120px; justify-content: center; align-items: center;
             border: 2px solid black; flex-shrink: 0;
         }
 
         .button {
-            height: 25px; width: 21vw; margin: 1vw; border-radius: 120px;
+            height: 28px; width: 75px; margin: 4px; border-radius: 120px;
             background-color: black; color: white; border: 1px solid white; font-size: 10px;
             cursor: pointer;
         }
 
-        /* Chat Container - Scalable Layout */
+        /* Chat Container */
         .container { 
-            width: 95vw; 
-            margin: 20px auto 15px auto; 
-            border: 2px solid black;
-            background-color: whitesmoke; 
-            border-radius: 30px;
-            display: flex; 
-            flex-direction: column; 
-            flex: 1; 
-            min-height: 0; 
-            overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 350px; margin-top: 20px; margin-bottom: 40px; border: 2px solid black;
+            background-color: whitesmoke; border-radius: 25px;
+            display: flex; flex-direction: column; height: 480px;
+            overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
         .ai-status {
             background: linear-gradient(180deg, #fff 0%, #87CEFA 100%);
             color: #003366; font-weight: bold; font-size: 11px;
-            padding: 8px 20px; border-bottom: 2px solid black;
-            flex-shrink: 0;
+            height: 35px; display: flex; align-items: center; padding-left: 20px;
+            border-bottom: 2px solid black; justify-content: space-between;
+            padding-right: 20px;
         }
 
         #chat-space {
-            flex: 1; 
-            padding: 15px; 
-            overflow-y: auto;
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            background: #ebebeb;
-            -webkit-overflow-scrolling: touch;
+            flex: 1; padding: 15px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 10px; background: #f0f0f0;
         }
 
         .message {
-            max-width: 85%; padding: 12px 15px; border-radius: 20px;
-            font-size: 14px; line-height: 1.4; border: 1.5px solid black;
+            max-width: 80%; padding: 10px 14px; border-radius: 18px;
+            font-size: 13px; line-height: 1.4; border: 1.5px solid black;
         }
 
         .ai-msg { align-self: flex-start; background: white; border-bottom-left-radius: 2px; }
@@ -87,25 +72,24 @@
 
         /* Input Area */
         .chat-input-area {
-            padding: 12px; 
-            padding-bottom: calc(12px + env(safe-area-inset-bottom));
-            background: whitesmoke; 
-            border-top: 2px solid black;
-            display: flex; 
-            gap: 10px;
-            flex-shrink: 0;
+            padding: 10px; background: whitesmoke; border-top: 2px solid black;
+            display: flex; gap: 8px;
         }
 
         .chat-input {
-            flex: 1; height: 45px; border-radius: 50px; border: 2px solid black;
-            padding: 0 20px; outline: none; font-size: 16px;
+            flex: 1; height: 38px; border-radius: 40px; border: 2px solid black;
+            padding-left: 15px; outline: none; font-size: 14px;
         }
 
+        .chat-input:disabled { background-color: #ddd; cursor: not-allowed; }
+
         .send-btn {
-            width: 80px; border-radius: 50px; border: 2px solid black;
+            width: 70px; border-radius: 40px; border: 2px solid black;
             background: linear-gradient(180deg, whitesmoke 0%, #87CEFA 100%);
             font-weight: bold; color: #003366; cursor: pointer;
         }
+
+        .send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -123,9 +107,12 @@
     </div>
 
     <div class="container">
-        <div class="ai-status">● WNO AI ASSISTANT</div>
+        <div class="ai-status">
+            <span>● WNO AI ASSISTANT</span>
+            <span id="req-count">Left: 3/3</span>
+        </div>
         <div id="chat-space">
-            <div class="message ai-msg">Systems ready. How can I assist you today?</div>
+            <div class="message ai-msg">Hello, I am the WNO AI Assistant. I can answer 3 questions for you today. How can I help?</div>
         </div>
         <form class="chat-input-area" id="chat-form">
             <input type="text" id="user-input" class="chat-input" placeholder="Type here..." required autocomplete="off">
@@ -137,9 +124,26 @@
         const chatSpace = document.getElementById('chat-space');
         const userInput = document.getElementById('user-input');
         const submitBtn = document.getElementById('submit-btn');
+        const reqCountDisplay = document.getElementById('req-count');
 
-        const API_KEY = "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";
+        const MAX_REQUESTS = 3;
+        let userRequests = parseInt(localStorage.getItem('wno_req_count')) || 0;
+
+        const API_KEY = "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";
         const API_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
+
+        function updateLimiter() {
+            const left = MAX_REQUESTS - userRequests;
+            reqCountDisplay.innerText = `Left: ${left < 0 ? 0 : left}/3`;
+            if (userRequests >= MAX_REQUESTS) {
+                userInput.disabled = true;
+                submitBtn.disabled = true;
+                userInput.placeholder = "Limit reached for today.";
+            }
+        }
+
+        // Initialize display
+        updateLimiter();
 
         function appendMessage(text, type) {
             const div = document.createElement('div');
@@ -153,22 +157,21 @@
         document.getElementById('chat-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const text = userInput.value.trim();
-            if (!text) return;
+            if (!text || userRequests >= MAX_REQUESTS) return;
 
             appendMessage(text, 'user');
             userInput.value = '';
-            submitBtn.disabled = true;
             
-            const aiMsgDiv = appendMessage("Syncing context...", 'ai');
+            // Increment and Save
+            userRequests++;
+            localStorage.setItem('wno_req_count', userRequests);
+            updateLimiter();
+
+            submitBtn.disabled = true;
+            const aiMsgDiv = appendMessage("...", 'ai');
             let fullResponse = "";
 
             try {
-                let companyContext = "";
-                try {
-                    const res = await fetch('company.txt');
-                    if(res.ok) companyContext = await res.text();
-                } catch(e) { console.log("TXT file not found or inaccessible."); }
-
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
@@ -176,15 +179,19 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: "nvidia/llama3-chatqa-1.5-8b",
+                        model: "qwen/qwen3-next-80b-a3b-instruct",
                         messages: [
-                            {role: "system", content: "You are the official AI assistant for the company described here: " + companyContext},
+                            {role: "system", content: "You are the official WNO AI Assistant for World News Officials. You are helpful and professional."},
                             {role: "user", content: text}
                         ],
-                        temperature: 0.2,
+                        temperature: 0.6,
+                        top_p: 0.7,
+                        max_tokens: 4096,
                         stream: true 
                     })
                 });
+
+                if (!response.ok) throw new Error();
 
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder();
@@ -201,9 +208,8 @@
                         if (line.startsWith('data: ') && line !== 'data: [DONE]') {
                             try {
                                 const json = JSON.parse(line.substring(6));
-                                const content = json.choices[0].delta.content;
-                                if (content) {
-                                    fullResponse += content;
+                                if (json.choices && json.choices[0].delta.content) {
+                                    fullResponse += json.choices[0].delta.content;
                                     aiMsgDiv.innerText = fullResponse;
                                     chatSpace.scrollTop = chatSpace.scrollHeight;
                                 }
@@ -212,9 +218,12 @@
                     }
                 }
             } catch (error) {
-                aiMsgDiv.innerText = "Error: Connection timed out.";
+                aiMsgDiv.innerText = "Error connecting to WNO systems.";
             } finally {
-                submitBtn.disabled = false;
+                // Re-enable button only if they still have requests left
+                if (userRequests < MAX_REQUESTS) {
+                    submitBtn.disabled = false;
+                }
             }
         });
     </script>
